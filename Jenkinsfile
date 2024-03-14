@@ -1,10 +1,15 @@
 pipeline{
-    agent docker
+    agent {
+        docker {
+            image 'maven:3.9.5-eclipse-temurin-17-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+        }
+    }
 
     stages{
-        stage("A"){
-            steps{
-                sh 'docker ps'
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build .'
             }
         }
     }
