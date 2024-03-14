@@ -1,7 +1,12 @@
 FROM node as builder
 WORKDIR /app
-COPY ./dist /app/dist
-COPY ./public /app/public
+COPY ./package.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
 
 FROM nginx:1.23.2-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
